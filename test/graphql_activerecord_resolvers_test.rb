@@ -5,7 +5,15 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     refute_nil ::GraphQLActiveRecordResolvers::VERSION
   end
 
-  def test_it_does_something_useful
-    assert false
+  def test_it_executes_queries
+    FactoryBot.create_list(:country, 3)
+
+    assert_equal(run_query(<<-GRAPHQL)["countries"].count, 3)
+      {
+        countries {
+          name
+        }
+      }
+    GRAPHQL
   end
 end
