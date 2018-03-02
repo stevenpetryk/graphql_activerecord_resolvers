@@ -4,5 +4,6 @@ module Types
 
     field :name, !types.String
     field :pets, !types[Types::PetType]
+    field :location, Types::LocationType
   end
 end

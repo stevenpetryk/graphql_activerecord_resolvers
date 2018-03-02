@@ -3,5 +3,6 @@ module Types
     name "Pet"
 
     field :name, !types.String
+    field :person, Types::PersonType
   end
 end

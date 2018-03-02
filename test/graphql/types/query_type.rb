@@ -9,9 +9,14 @@ module Types
 
     field :countries do
       type types[Types::CountryType]
-      type types[Types::CountryType]
 
       resolve ->(_, _, _) { Country.all }
+    end
+
+    field :locations do
+      type types[Types::LocationType]
+
+      resolve ->(_, _, _) { Location.all }
     end
   end
 end

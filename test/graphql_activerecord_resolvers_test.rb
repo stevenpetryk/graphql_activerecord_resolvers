@@ -56,6 +56,23 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     assert_no_bullet_warnings
   end
 
+  def test_belongs_to_efficiency
+    execute(<<-GRAPHQL)
+      {
+        locations {
+          name
+
+          country {
+            name
+          }
+        }
+      }
+    GRAPHQL
+
+    assert_graphql_success
+    assert_no_bullet_warnings
+  end
+
   def test_renamed_has_many_through_association
     execute(<<-GRAPHQL)
       {

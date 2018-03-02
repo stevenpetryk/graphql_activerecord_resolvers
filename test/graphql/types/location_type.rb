@@ -4,5 +4,6 @@ module Types
 
     field :name, !types.String
     field :people, !types[Types::PersonType]
+    field :country, Types::CountryType
   end
 end
