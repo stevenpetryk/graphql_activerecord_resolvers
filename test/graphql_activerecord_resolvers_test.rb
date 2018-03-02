@@ -5,15 +5,71 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     refute_nil ::GraphQLActiveRecordResolvers::VERSION
   end
 
-  def test_it_executes_queries
-    FactoryBot.create_list(:country, 3)
-
-    assert_equal(run_query(<<-GRAPHQL)["countries"].count, 3)
+  def test_regular_collections_efficiency
+    execute(<<-GRAPHQL)
       {
         countries {
           name
         }
       }
     GRAPHQL
+
+    assert_graphql_success
+    assert_no_bullet_warnings
+  end
+
+  def test_nested_collections_efficiency
+    execute(<<-GRAPHQL)
+      {
+        countries {
+          name
+
+          locations {
+            name
+          }
+        }
+      }
+    GRAPHQL
+
+    assert_graphql_success
+    assert_no_bullet_warnings
+  end
+
+  def test_doubly_nested_collections_efficiency
+    execute(<<-GRAPHQL)
+      {
+        countries {
+          name
+
+          locations {
+            name
+
+            people {
+              name
+            }
+          }
+        }
+      }
+    GRAPHQL
+
+    assert_graphql_success
+    assert_no_bullet_warnings
+  end
+
+  def test_renamed_has_many_through_association
+    execute(<<-GRAPHQL)
+      {
+        countries {
+          name
+
+          animals {
+            name
+          }
+        }
+      }
+    GRAPHQL
+
+    assert_graphql_success
+    assert_no_bullet_warnings
   end
 end

@@ -2,7 +2,8 @@ require "active_record"
 
 class Country < ActiveRecord::Base
   has_many :locations
-  has_many :animals, through: :people, foreign_key: :pet_id
+  has_many :people, through: :locations
+  has_many :animals, through: :people, source: :pets
 end
 
 class Location < ActiveRecord::Base
