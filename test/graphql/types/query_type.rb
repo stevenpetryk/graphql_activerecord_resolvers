@@ -10,13 +10,13 @@ module Types
     field :countries do
       type types[Types::CountryType]
 
-      resolve ->(_, _, _) { Country.all }
+      resolve GraphQLActiveRecordResolvers::BaseResolver.resolve_collection(Country)
     end
 
     field :locations do
       type types[Types::LocationType]
 
-      resolve ->(_, _, _) { Location.all }
+      resolve GraphQLActiveRecordResolvers::BaseResolver.resolve_collection(Location)
     end
   end
 end
