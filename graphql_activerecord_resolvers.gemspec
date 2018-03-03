@@ -31,6 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop", "~> 0.52"
   spec.add_development_dependency "pry", "~> 0.11"
 
-  spec.add_development_dependency "activerecord", "~> 5.1.5"
-  spec.add_development_dependency "graphql"
+  spec.add_development_dependency "activerecord", "~> 5.1"
+  spec.add_development_dependency "graphql", "~> 0.19"
 end
