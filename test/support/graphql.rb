@@ -14,15 +14,13 @@ module Minitest
         []
       end
 
-      GraphQLSchema.
+      result = GraphQLSchema.
         schema_with_resolver(mock_resolver).
         execute(query_string)
 
-      resolver.includes_tree
-    end
+      flunk "\nGraphQL errors:\n\n#{errors}" if result["errors"]
 
-    def assert_graphql_success
-      flunk "\nGraphQL errors:\n\n#{errors}" if errors
+      resolver.includes_tree
     end
   end
 end

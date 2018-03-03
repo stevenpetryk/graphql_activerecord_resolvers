@@ -10,8 +10,6 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
       includes_tree("{ countries { name } }", Country),
       [],
     )
-
-    assert_graphql_success
   end
 
   def test_nested_collections_efficiency
@@ -26,8 +24,6 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
         }
       }
     GRAPHQL
-
-    assert_graphql_success
   end
 
   def test_doubly_nested_collections_efficiency
@@ -46,8 +42,6 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
         }
       }
     GRAPHQL
-
-    assert_graphql_success
   end
 
   def test_belongs_to_efficiency
@@ -62,8 +56,6 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
         }
       }
     GRAPHQL
-
-    assert_graphql_success
   end
 
   def test_renamed_has_many_through_association
@@ -78,7 +70,5 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
         }
       }
     GRAPHQL
-
-    assert_graphql_success
   end
 end
