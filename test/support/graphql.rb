@@ -9,7 +9,7 @@ module Minitest
 
       resolver = nil
 
-      mock_resolver = ->(obj, args, ctx) do
+      mock_resolver = ->(_obj, _args, ctx) do
         resolver = GraphQLActiveRecordResolvers::BaseResolver.new(klass, ctx)
         []
       end

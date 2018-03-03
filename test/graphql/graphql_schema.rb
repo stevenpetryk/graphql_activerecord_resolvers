@@ -19,7 +19,7 @@ class GraphQLSchema
             type types[Types::LocationType]
             resolve mock_resolver
           end
-        end
+        end,
       )
     end
   end
