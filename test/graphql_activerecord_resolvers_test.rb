@@ -6,10 +6,7 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
   end
 
   def test_regular_collections_efficiency
-    assert_equal(
-      includes_tree("{ countries { name } }", Country),
-      [],
-    )
+    assert_equal(includes_tree("{ countries { name } }", Country), [])
   end
 
   def test_nested_collections_efficiency
