@@ -21,12 +21,6 @@ module Minitest
       resolver.includes_tree
     end
 
-    def execute(query, variables: nil)
-      result = GraphQLSchema.execute(query, variables: variables)
-      @data = result.to_h["data"]
-      @errors = result.to_h["errors"]
-    end
-
     def assert_graphql_success
       flunk "\nGraphQL errors:\n\n#{errors}" if errors
     end
