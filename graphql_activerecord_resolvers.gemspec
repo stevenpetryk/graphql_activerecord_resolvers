@@ -1,4 +1,3 @@
-
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "graphql_activerecord_resolvers/version"
@@ -9,9 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Steven Petryk"]
   spec.email = ["petryk.steven@gmail.com"]
 
-  spec.summary = %q{Write a short summary, because RubyGems requires one.}
-  spec.description = %q{Write a longer description or delete this line.}
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
+  spec.summary = %q{GraphQL on Rails, without the N+1's.}
+  spec.homepage = "https://github.com/stevenpetryk/graphql_activerecord_resolvers"
   spec.license = "MIT"
 
   if spec.respond_to?(:metadata)
