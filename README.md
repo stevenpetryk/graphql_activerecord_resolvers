@@ -1,6 +1,6 @@
 # GraphQL ActiveRecord Resolvers
 
-GraphQL on Rails, without the N+1's.
+Build a GraphQL API on Rails, without the N+1's.
 
 ## Installation
 
@@ -20,7 +20,40 @@ Or install it yourself as:
 
 ## Usage
 
-undefined
+GraphQL marks a new era in API development, one in which the clients dictate what the server
+should deliver. But, due to N+1 queries, using GraphQL with Rails is a pain. That's where this gem
+comes in.
+
+`graphql_activerecord_resolvers` works with [graphql-ruby](http://graphql-ruby.org/). It allows you
+to easily substitute your own resolvers for supercharged ones. These resolvers take a look at the
+schema, the query, and the context, and automatically build up an `eager_load` instruction that
+Rails understands.
+
+To use it, simply make the following change to every **root field** in your Query:
+
+```diff
+module Types
+  QueryType = GraphQL::ObjectType.define do
+    name "Query"
+
+    field :countries do
+      type types[Types::CountryType]
+
+-     resolve ->(obj, ctx, args) { Country.all }
++     resolve GraphQLActiveRecordResolvers::BaseResolver.resolve(Country)
+    end
+
+    field :locations do
+      type types[Types::LocationType]
+
+-     resolve ->(obj, ctx, args) { Location.all }
++     resolve GraphQLActiveRecordResolvers::BaseResolver.resolve(Location)
+    end
+  end
+end
+```
+
+That's all you need to do.
 
 ## Development
 
