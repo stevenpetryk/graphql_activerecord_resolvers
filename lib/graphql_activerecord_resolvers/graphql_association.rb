@@ -15,7 +15,7 @@ module GraphQLActiveRecordResolvers
         child_associations.map(&:build_includes_tree)
       elsif child_associations.any?
         {
-          field.name => child_associations.map(&:build_includes_tree)
+          field.name => child_associations.map(&:build_includes_tree),
         }
       else
         field.name
@@ -43,7 +43,7 @@ module GraphQLActiveRecordResolvers
           klass: klass_for_association_name(field.name),
           field: field,
           selections: selection.selections,
-          root: false
+          root: false,
         )
       end
     end
@@ -61,7 +61,7 @@ module GraphQLActiveRecordResolvers
     end
 
     def klass_for_association_name(name)
-      associations.find { |association| association.name.to_s == name.to_s }.klass
+      associations.detect { |association| association.name.to_s == name.to_s }.klass
     end
   end
 end
