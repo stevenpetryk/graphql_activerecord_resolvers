@@ -31,7 +31,7 @@ module GraphQLActiveRecordResolvers
     end
 
     def child_fields_that_are_also_associations
-      child_fields.select do |(_, field)|
+      child_fields.select do |_, field|
         association_names.map(&:to_s).include?(field.name.to_s)
       end
     end

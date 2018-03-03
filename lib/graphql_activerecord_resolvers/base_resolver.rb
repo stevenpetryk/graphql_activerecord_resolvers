@@ -17,13 +17,11 @@ module GraphQLActiveRecordResolvers
 
     def resolve
       if includes_tree
-        klass.eager_load(includes_tree)
+        klass.includes(includes_tree)
       else
         klass.all
       end
     end
-
-    private
 
     def includes_tree
       @includes_tree ||=
@@ -37,6 +35,8 @@ module GraphQLActiveRecordResolvers
           ).
           build_includes_tree
     end
+
+    private
 
     def root_field
       schema.query.get_field(ctx.key)

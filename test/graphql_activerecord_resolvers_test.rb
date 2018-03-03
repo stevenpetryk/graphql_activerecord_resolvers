@@ -6,20 +6,16 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
   end
 
   def test_regular_collections_efficiency
-    execute(<<-GRAPHQL)
-      {
-        countries {
-          name
-        }
-      }
-    GRAPHQL
+    assert_equal(
+      includes_tree("{ countries { name } }", Country),
+      [],
+    )
 
     assert_graphql_success
-    assert_no_bullet_warnings
   end
 
   def test_nested_collections_efficiency
-    execute(<<-GRAPHQL)
+    assert_equal(includes_tree(<<-GRAPHQL, Country), ["locations"])
       {
         countries {
           name
@@ -32,11 +28,11 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     GRAPHQL
 
     assert_graphql_success
-    assert_no_bullet_warnings
   end
 
   def test_doubly_nested_collections_efficiency
-    execute(<<-GRAPHQL)
+    binding.pry
+    assert_equal(includes_tree(<<-GRAPHQL, Country), [{ "locations" => ["people"] }])
       {
         countries {
           name
@@ -53,11 +49,10 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     GRAPHQL
 
     assert_graphql_success
-    assert_no_bullet_warnings
   end
 
   def test_belongs_to_efficiency
-    execute(<<-GRAPHQL)
+    assert_equal(includes_tree(<<-GRAPHQL, Location), ["country"])
       {
         locations {
           name
@@ -70,11 +65,10 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     GRAPHQL
 
     assert_graphql_success
-    assert_no_bullet_warnings
   end
 
   def test_renamed_has_many_through_association
-    execute(<<-GRAPHQL)
+    assert_equal(includes_tree(<<-GRAPHQL, Country), ["animals"])
       {
         countries {
           name
@@ -87,6 +81,5 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     GRAPHQL
 
     assert_graphql_success
-    assert_no_bullet_warnings
   end
 end
