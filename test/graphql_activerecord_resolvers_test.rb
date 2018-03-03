@@ -31,7 +31,6 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
   end
 
   def test_doubly_nested_collections_efficiency
-    binding.pry
     assert_equal(includes_tree(<<-GRAPHQL, Country), [{ "locations" => ["people"] }])
       {
         countries {

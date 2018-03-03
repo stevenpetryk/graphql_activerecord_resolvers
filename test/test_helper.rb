@@ -2,7 +2,6 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "graphql_activerecord_resolvers"
 
 require "active_record"
-require "factory_bot"
 require "graphql"
 require "minitest"
 require "pry"

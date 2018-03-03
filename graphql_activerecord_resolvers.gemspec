@@ -34,6 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry", "~> 0.11"
 
   spec.add_development_dependency "activerecord", "~> 5.1.5"
-  spec.add_development_dependency "factory_bot", "~> 4.8"
   spec.add_development_dependency "graphql"
 end
