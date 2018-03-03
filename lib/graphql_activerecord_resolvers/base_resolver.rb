@@ -46,10 +46,6 @@ module GraphQLActiveRecordResolvers
       ctx.ast_node.selections
     end
 
-    def needs_eager_loading?
-      false
-    end
-
     def klass
       if @klass.is_a? String
         @klass.constantize
