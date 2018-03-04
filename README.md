@@ -39,15 +39,15 @@ module Types
     field :countries do
       type types[Types::CountryType]
 
--     resolve ->(obj, ctx, args) { Country.all }
-+     resolve GraphQLActiveRecordResolvers::BaseResolver.resolve(Country)
+-     resolve ->(_, _, _) { Country.all }
++     resolve ->(_, ctx, _) { Country.eager_load_from_graphql(ctx) }
     end
 
     field :locations do
       type types[Types::LocationType]
 
--     resolve ->(obj, ctx, args) { Location.all }
-+     resolve GraphQLActiveRecordResolvers::BaseResolver.resolve(Location)
+-     resolve ->(_, _, _) { Location.all }
++     resolve ->(_, ctx, _) { Location.eager_load_from_graphql(ctx) }
     end
   end
 end
@@ -78,6 +78,11 @@ module Types
   end
 end
 ```
+
+### What about for fields that return single objects?
+
+Research is still underway on this. The difficulty comes from the complexity of `graphql-ruby`'s
+`Schema` class and how it is completely decoupled from any given GraphQL AST node's context.
 
 ## Development
 
