@@ -53,7 +53,31 @@ module Types
 end
 ```
 
-That's all you need to do.
+### When field names don't match association names
+
+There's a special case that the resolver can't detect automatically, and that is when you have a
+field that resolves to an association but does not match the name of said association. In this case,
+you need to explicitly declare the association name on the field. For example:
+
+```diff
+class Pet < ActiveRecord::Base
+  belongs_to :person
+end
+
+# ...
+
+module Types
+  PetType = GraphQL::ObjectType.define do
+    name "Pet"
+
+    field :owner do
+      type Types::PersonType
++     association_name :person
+      resolve -> (obj, _, _) { obj.person }
+    end
+  end
+end
+```
 
 ## Development
 
