@@ -69,6 +69,17 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
     GRAPHQL
   end
 
+  def test_field_with_custom_association_name
+    assert_equal(includes_tree(<<-GRAPHQL, Location), ["country"])
+      {
+        locations {
+          name
+          mother_land { name }
+        }
+      }
+    GRAPHQL
+  end
+
   def test_smorgasbord
     assert_equal(includes_tree(<<-GRAPHQL, Person), [{ "doctor" => ["patients"] }, "groceries", "pets"])
       {
