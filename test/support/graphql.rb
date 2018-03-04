@@ -1,28 +1,24 @@
-require_relative "../graphql/graphql_schema"
+require_relative "graphql_types/country_type"
+require_relative "graphql_types/location_type"
+require_relative "graphql_types/person_type"
+require_relative "graphql_types/doctor_type"
+require_relative "graphql_types/grocery_item_type"
+require_relative "graphql_types/pet_type"
 
 module Minitest
   class Test
     attr_reader :data, :errors
 
-    def includes_tree(query_string, klass)
-      klass.cattr_accessor :includes_tree
-
-      def klass.each_with_index
-        [].each_with_index
+    def assert_includes_tree(query_string, expected_includes_tree)
+      # Trick Ruby into letting us set variables in the lambda
+      resolver = ->(obj, args, ctx) do
+        resolver = GraphQLActiveRecordResolvers::BaseResolver.new(klass, ctx)
+        assert_equal(resolver.includes_tree, expected_includes_tree)
+        []
       end
 
-      def klass.includes(tree)
-        self.includes_tree = tree
-        self
-      end
-
-      result = GraphQLSchema.
-        schema_with_resolved(klass).
-        execute(query_string)
-
-      flunk "\nGraphQL errors:\n\n#{errors}" if result["errors"]
-
-      klass.includes_tree
+      result = schema(resolver).execute(query_string)
+      flunk "\nGraphQL errors:\n\n#{result["errors"]}" if result["errors"]
     end
   end
 end

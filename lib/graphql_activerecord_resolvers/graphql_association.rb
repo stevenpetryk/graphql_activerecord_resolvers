@@ -1,12 +1,10 @@
 module GraphQLActiveRecordResolvers
   class GraphQLAssociation
-    attr_reader :klass, :schema, :field, :selections, :root
+    attr_reader :klass, :irep_node, :root
 
-    def initialize(schema:, klass:, field:, selections:, root:)
+    def initialize(klass:, irep_node:, root:)
       @klass = klass
-      @schema = schema
-      @field = field
-      @selections = selections
+      @irep_node = irep_node
       @root = root
     end
 
@@ -15,41 +13,33 @@ module GraphQLActiveRecordResolvers
         child_associations.map(&:build_includes_tree)
       elsif child_associations.any?
         {
-          field_association_name => child_associations.map(&:build_includes_tree),
+          irep_node_association_name => child_associations.map(&:build_includes_tree),
         }
       else
-        field_association_name
+        irep_node_association_name
       end
     end
 
     private
 
-    def child_fields
-      selections.map do |selection|
-        [selection, schema.get_field(field_type, selection.name)]
-      end
-    end
-
-    def child_fields_that_are_also_associations
-      child_fields.select do |_, field|
-        association_names.include?(field_association_name(field))
-      end
+    def child_irep_nodes_that_map_to_associations
+      irep_node.children.select do |name, irep_node|
+        association_names.include?(irep_node_association_name(irep_node))
+      end.values
     end
 
     def child_associations
-      child_fields_that_are_also_associations.map do |(selection, field)|
+      child_irep_nodes_that_map_to_associations.map do |child_irep_node|
         GraphQLAssociation.new(
-          schema: schema,
-          klass: klass_for_child_field(field),
-          field: field,
-          selections: selection.selections,
+          klass: klass_for_child_irep_node(child_irep_node),
+          irep_node: child_irep_node,
           root: false,
         )
       end
     end
 
-    def field_type
-      field.type.unwrap
+    def field_for_irep_node(irep_node)
+      irep_node.definitions.values.first
     end
 
     def associations
@@ -60,12 +50,13 @@ module GraphQLActiveRecordResolvers
       associations.map(&:name).map(&:to_s)
     end
 
-    def field_association_name(field = self.field)
+    def irep_node_association_name(irep_node = self.irep_node)
+      field = field_for_irep_node(irep_node)
       (field.metadata[:association_name] || field.name).to_s
     end
 
-    def klass_for_child_field(child_field)
-      name = field_association_name(child_field)
+    def klass_for_child_irep_node(child_irep_node)
+      name = irep_node_association_name(child_irep_node)
       associations.detect { |association| association.name.to_s == name }.klass
     end
   end

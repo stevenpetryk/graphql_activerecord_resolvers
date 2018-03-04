@@ -11,6 +11,5 @@ module ActiveRecord
 end
 
 GraphQL::Field.accepts_definitions(
-  eager_load: GraphQL::Define.assign_metadata_key(:eager_load),
   association_name: GraphQL::Define.assign_metadata_key(:association_name),
 )
