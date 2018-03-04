@@ -14,7 +14,17 @@ end
 
 class Person < ActiveRecord::Base
   has_many :pets
+  has_many :groceries
   belongs_to :location
+  belongs_to :doctor
+end
+
+class Doctor < ActiveRecord::Base
+  has_many :patients, class_name: "Person"
+end
+
+class Grocery < ActiveRecord::Base
+  belongs_to :person
 end
 
 class Pet < ActiveRecord::Base

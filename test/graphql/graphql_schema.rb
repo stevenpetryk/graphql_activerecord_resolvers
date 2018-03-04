@@ -1,6 +1,8 @@
 require_relative "types/country_type"
 require_relative "types/location_type"
 require_relative "types/person_type"
+require_relative "types/doctor_type"
+require_relative "types/grocery_item_type"
 require_relative "types/pet_type"
 
 class GraphQLSchema
@@ -17,6 +19,11 @@ class GraphQLSchema
 
           field :locations do
             type types[Types::LocationType]
+            resolve mock_resolver
+          end
+
+          field :people do
+            type types[Types::PersonType]
             resolve mock_resolver
           end
         end,

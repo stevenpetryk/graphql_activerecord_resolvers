@@ -68,4 +68,20 @@ class GraphQLActiveRecordResolversTest < Minitest::Test
       }
     GRAPHQL
   end
+
+  def test_smorgasbord
+    assert_equal(includes_tree(<<-GRAPHQL, Person), [{ "doctor" => ["patients"] }, "groceries", "pets"])
+      {
+        people {
+          name
+          doctor {
+            name
+            patients { name }
+          }
+          groceries { name }
+          pets { name }
+        }
+      }
+    GRAPHQL
+  end
 end
