@@ -39,7 +39,7 @@ module GraphQLActiveRecordResolvers
     private
 
     def root_field
-      schema.query.get_field(ctx.key)
+      schema.query.get_field(ctx.ast_node.name)
     end
 
     def root_selections
