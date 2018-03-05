@@ -1,5 +1,5 @@
 module GraphQLActiveRecordResolvers
-  class BaseResolver
+  class IncludesTree
     attr_reader :klass, :irep_node
 
     def initialize(klass, ctx)

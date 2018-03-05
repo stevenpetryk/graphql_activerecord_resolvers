@@ -10,9 +10,8 @@ module Minitest
     attr_reader :data, :errors
 
     def assert_includes_tree(query_string, expected_includes_tree)
-      # Trick Ruby into letting us set variables in the lambda
       resolver = ->(_obj, _args, ctx) do
-        resolver = GraphQLActiveRecordResolvers::BaseResolver.new(klass, ctx)
+        resolver = GraphQLActiveRecordResolvers::IncludesTree.new(klass, ctx)
         assert_equal(resolver.includes_tree, expected_includes_tree)
         []
       end

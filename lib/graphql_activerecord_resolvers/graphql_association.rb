@@ -23,7 +23,7 @@ module GraphQLActiveRecordResolvers
     private
 
     def child_irep_nodes_that_map_to_associations
-      irep_node.children.select do |_, irep_node|
+      irep_node.typed_children.values.first.select do |_, irep_node|
         association_names.include?(irep_node_association_name(irep_node))
       end.values
     end
@@ -39,7 +39,7 @@ module GraphQLActiveRecordResolvers
     end
 
     def field_for_irep_node(irep_node)
-      irep_node.definitions.values.first
+      irep_node.definitions.first
     end
 
     def associations
