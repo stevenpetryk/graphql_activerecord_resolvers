@@ -24,9 +24,9 @@ GraphQL marks a new era in API development, one in which the clients dictate wha
 should deliver. But, due to N+1 queries, using GraphQL with Rails is a pain. That's where this gem
 comes in.
 
-`graphql_activerecord_resolvers` works with the [graphql] gem. It allows you to easily substitute your
-own resolvers for supercharged ones. These resolvers take a look at the schema, the query, and the
-context, and automatically build up an `eager_load` instruction that Rails understands.
+`graphql_activerecord_resolvers` works with the [graphql] gem. It provides an ActiveRecord scope
+that works in tandem with the GraphQL context to automatically preload the requested associations.
+This takes the database performance burden off of you when writing your GraphQL API.
 
 [graphql]: http://graphql-ruby.org
 
@@ -53,6 +53,8 @@ module Types
   end
 end
 ```
+
+You'll notice the N+1's disappear.
 
 ### When field names don't match association names
 
