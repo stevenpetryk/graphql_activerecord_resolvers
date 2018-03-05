@@ -21,7 +21,7 @@ class CombinationTest < Minitest::Test
   end
 
   def test_combination
-    assert_includes_tree(<<-GRAPHQL, [{ "doctor" => ["patients"] }, "groceries", "pets"])
+    assert_includes_arguments(<<-GRAPHQL, [{ "doctor" => ["patients"] }, "groceries", "pets"])
       {
         people {
           name

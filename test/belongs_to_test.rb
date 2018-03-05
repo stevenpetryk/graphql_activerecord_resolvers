@@ -21,7 +21,7 @@ class BelongsToTest < Minitest::Test
   end
 
   def test_belongs_to
-    assert_includes_tree(<<-GRAPHQL, ["country"])
+    assert_includes_arguments(<<-GRAPHQL, ["country"])
       {
         locations {
           name

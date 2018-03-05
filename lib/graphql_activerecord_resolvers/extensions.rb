@@ -3,9 +3,9 @@ require "graphql"
 
 module ActiveRecord
   class Base
-    def self.eager_load_from_graphql(ctx)
-      resolver = GraphQLActiveRecordResolvers::IncludesTree.new(self, ctx)
-      includes(resolver.includes_tree)
+    def self.preload_graphql_associations(ctx)
+      association_tree = GraphQLActiveRecordResolvers::IncludesTree.new(self, ctx)
+      includes(association_tree.includes_arguments)
     end
   end
 end

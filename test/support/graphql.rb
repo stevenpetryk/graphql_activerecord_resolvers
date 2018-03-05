@@ -9,10 +9,10 @@ module Minitest
   class Test
     attr_reader :data, :errors
 
-    def assert_includes_tree(query_string, expected_includes_tree)
+    def assert_includes_arguments(query_string, expected_includes_tree)
       resolver = ->(_obj, _args, ctx) do
-        resolver = GraphQLActiveRecordResolvers::IncludesTree.new(klass, ctx)
-        assert_equal(resolver.includes_tree, expected_includes_tree)
+        resolver = GraphQLActiveRecordResolvers::AssociationTree.new(klass, ctx)
+        assert_equal(resolver.includes_arguments, expected_includes_tree)
         []
       end
 

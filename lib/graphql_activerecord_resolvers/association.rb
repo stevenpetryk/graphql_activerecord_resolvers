@@ -1,5 +1,5 @@
 module GraphQLActiveRecordResolvers
-  class GraphQLAssociation
+  class Association
     attr_reader :klass, :irep_node, :root
 
     def initialize(klass:, irep_node:, root:)
@@ -8,12 +8,12 @@ module GraphQLActiveRecordResolvers
       @root = root
     end
 
-    def build_includes_tree
+    def build_includes_arguments
       if root
-        child_associations.map(&:build_includes_tree)
+        child_associations.map(&:build_includes_arguments)
       elsif child_associations.any?
         {
-          irep_node_association_name => child_associations.map(&:build_includes_tree),
+          irep_node_association_name => child_associations.map(&:build_includes_arguments),
         }
       else
         irep_node_association_name
@@ -30,7 +30,7 @@ module GraphQLActiveRecordResolvers
 
     def child_associations
       child_irep_nodes_that_map_to_associations.map do |child_irep_node|
-        GraphQLAssociation.new(
+        Association.new(
           klass: klass_for_child_irep_node(child_irep_node),
           irep_node: child_irep_node,
           root: false,

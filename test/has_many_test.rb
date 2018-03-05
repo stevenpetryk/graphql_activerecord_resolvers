@@ -21,7 +21,7 @@ class HasManyTest < Minitest::Test
   end
 
   def test_has_many
-    assert_includes_tree(<<-GRAPHQL, ["locations"])
+    assert_includes_arguments(<<-GRAPHQL, ["locations"])
       {
         countries {
           name
@@ -35,7 +35,7 @@ class HasManyTest < Minitest::Test
   end
 
   def test_double_has_many
-    assert_includes_tree(<<-GRAPHQL, [{ "locations" => ["people"] }])
+    assert_includes_arguments(<<-GRAPHQL, [{ "locations" => ["people"] }])
       {
         countries {
           name
@@ -53,7 +53,7 @@ class HasManyTest < Minitest::Test
   end
 
   def test_renamed_has_many_through
-    assert_includes_tree(<<-GRAPHQL, ["animals"])
+    assert_includes_arguments(<<-GRAPHQL, ["animals"])
       {
         countries {
           name

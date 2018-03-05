@@ -21,7 +21,7 @@ class AssociationNameTest < Minitest::Test
   end
 
   def test_custom_association_name
-    assert_includes_tree(<<-GRAPHQL, [{ "location" => ["country"] }])
+    assert_includes_arguments(<<-GRAPHQL, [{ "location" => ["country"] }])
       {
         people {
           name
