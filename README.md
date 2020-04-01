@@ -1,3 +1,9 @@
+# ABANDONED
+
+[@Envek](https://github.com/Envek)'s [fork of graphql-preload](https://github.com/Envek/graphql-preload) works very well and has a bright future. This gem, by contrast, is unmaintained.
+
+---
+
 # GraphQL ActiveRecord Resolvers
 
 Build a GraphQL API on Rails, without the N+1's.
