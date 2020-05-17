@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = %q{GraphQL on Rails, without the N+1's.}
   spec.homepage = "https://github.com/stevenpetryk/graphql_activerecord_resolvers"
   spec.license = "MIT"
+  spec.required_ruby_version = ">= 2.2.0"
 
   if spec.respond_to?(:metadata)
     spec.metadata["allowed_push_host"] = "https://rubygems.org"
